@@ -1,0 +1,7 @@
+build/*
+*.mp4
+*.mp3
+tools/videoEncoder/inFrames/*.png
+tools/videoEncoder/outFrames/*.png
+tools/videoEncoder/*.png
+*.crv

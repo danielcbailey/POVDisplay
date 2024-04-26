@@ -1,0 +1,18 @@
+.program spi_cpha0_cs
+.side_set 2
+
+.wrap_target
+bitloop:
+    out pins, 1        side 0x0 [1]
+    in pins, 1         side 0x1
+    jmp x-- bitloop    side 0x1
+
+    out pins, 1        side 0x0
+    mov x, y           side 0x0     ; Reload bit counter from Y
+    in pins, 1         side 0x1
+    jmp !osre bitloop  side 0x1     ; Fall-through if TXF empties
+
+    nop                side 0x0 [1] ; CSn back porch
+public entry_point:                 ; Must set X,Y to n-2 before starting!
+    pull ifempty       side 0x2 [1] ; Block with CSn high (minimum 2 cycles)
+.wrap
